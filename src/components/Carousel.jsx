@@ -3,13 +3,28 @@ import { FaQuoteRight, FaAngleLeft, FaAngleRight } from 'react-icons/fa'
 import { longList } from '../data.js'
 
 const Carousel = () => {
-  const [peoples, setPeoples] = useState([...longList])
+  const [people, setPeople] = useState([...longList])
   const [currentIndex, setCurrentIndex] = useState(0)
+
+  const prevSlide = () => {
+    setCurrentIndex((oldIndex) => {
+      const result = (oldIndex - 1 + people.length) % people.length
+      return result
+    })
+  }
+
+  const nextSlide = () => {
+    setCurrentIndex((oldIndex) => {
+      const result = (oldIndex + 1) % people.length
+      return result
+    })
+  }
+
   return (
     <section>
       <div className='slider-container'>
-        {peoples.map((people, index) => {
-          const { id, name, title, image, quote } = people
+        {people.map((item, index) => {
+          const { id, name, title, image, quote } = item
           return (
             <article
               style={{
@@ -30,10 +45,10 @@ const Carousel = () => {
             </article>
           )
         })}
-        <button className='prev'>
+        <button className='prev' onClick={() => prevSlide()}>
           <FaAngleLeft />
         </button>
-        <button className='next'>
+        <button className='next' onClick={() => nextSlide()}>
           <FaAngleRight />
         </button>
       </div>
