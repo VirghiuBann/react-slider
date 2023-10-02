@@ -1,16 +1,25 @@
 import { useState } from 'react'
 import { FaQuoteRight, FaAngleLeft, FaAngleRight } from 'react-icons/fa'
-import { shortList } from '../data.js'
+import { longList } from '../data.js'
 
 const Carousel = () => {
-  const [peoples, setPeoples] = useState([...shortList])
+  const [peoples, setPeoples] = useState([...longList])
+  const [currentIndex, setCurrentIndex] = useState(0)
   return (
     <section>
       <div className='slider-container'>
-        {peoples.map((people) => {
+        {peoples.map((people, index) => {
           const { id, name, title, image, quote } = people
           return (
-            <section key={id} className='slide'>
+            <article
+              style={{
+                transform: `translateX(${100 * (index - currentIndex)}%)`,
+                opacity: index === currentIndex ? 1 : 0,
+                visibility: index === currentIndex ? 'visible' : 'hidden',
+              }}
+              key={id}
+              className='slide'
+            >
               <div>
                 <img className='person-img' src={image} alt={name} />
               </div>
@@ -18,7 +27,7 @@ const Carousel = () => {
               <h5 className='title'>{title}</h5>
               <p className='text'>{quote}</p>
               <FaQuoteRight className='icon' />
-            </section>
+            </article>
           )
         })}
         <button className='prev'>
