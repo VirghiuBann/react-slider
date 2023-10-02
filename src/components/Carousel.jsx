@@ -1,24 +1,33 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaQuoteRight, FaAngleLeft, FaAngleRight } from 'react-icons/fa'
 import { longList } from '../data.js'
 
 const Carousel = () => {
   const [people, setPeople] = useState([...longList])
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentPerson, setCurrentPerson] = useState(0)
 
   const prevSlide = () => {
-    setCurrentIndex((oldIndex) => {
+    setCurrentPerson((oldIndex) => {
       const result = (oldIndex - 1 + people.length) % people.length
       return result
     })
   }
 
   const nextSlide = () => {
-    setCurrentIndex((oldIndex) => {
+    setCurrentPerson((oldIndex) => {
       const result = (oldIndex + 1) % people.length
       return result
     })
   }
+
+  useEffect(() => {
+    let sliderId = setInterval(() => {
+      nextSlide()
+    }, 5000)
+    return () => {
+      clearInterval(sliderId)
+    }
+  }, [currentPerson])
 
   return (
     <section>
@@ -28,9 +37,9 @@ const Carousel = () => {
           return (
             <article
               style={{
-                transform: `translateX(${100 * (index - currentIndex)}%)`,
-                opacity: index === currentIndex ? 1 : 0,
-                visibility: index === currentIndex ? 'visible' : 'hidden',
+                transform: `translateX(${100 * (index - currentPerson)}%)`,
+                opacity: index === currentPerson ? 1 : 0,
+                visibility: index === currentPerson ? 'visible' : 'hidden',
               }}
               key={id}
               className='slide'
