@@ -5,22 +5,23 @@ const Carousel = () => {
   const [peoples, setPeoples] = useState([...shortList])
   return (
     <section>
-      <div className='container'>
+      <div className='slider-container'>
         {peoples.map((people) => {
           const { id, name, title, image, quote } = people
           return (
-            <section key={id}>
+            <section key={id} className='slide'>
               <div>
-                <img src={image} alt={name} />
+                <img className='person-img' src={image} alt={name} />
               </div>
-              <h4>{title}</h4>
-              <p>{quote}</p>
+              <h5 className='name'>{name}</h5>
+              <h5 className='title'>{title}</h5>
+              <p className='text'>{quote}</p>
             </section>
           )
         })}
+        <button className='prev'>prev</button>
+        <button className='next'>next</button>
       </div>
-      <button>prev</button>
-      <button>next</button>
     </section>
   )
 }
